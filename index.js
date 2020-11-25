@@ -50,7 +50,7 @@ var buildMagnetURI = function(infoHash) {
 };
 
 var myParseTorrent = function(uri, callback) {
-	if(typeof uri == 'string' && (uri.substring(0, 7) == 'http://' || uri.substring(0, 8) == 'https://')) {
+	if(typeof uri == 'string' && (uri.substring(0, 7) == 'https://' || uri.substring(0, 8) == 'https://')) {
 		parseTorrent.remote(uri, function(err, data) {
 			if(err) { callback(false); }
 			callback(data.infoHash.toLowerCase());
