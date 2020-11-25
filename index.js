@@ -3,7 +3,7 @@ var webtorrent = require('webtorrent');
 var bodyParser = require('body-parser');
 var parseTorrent = require('parse-torrent');
 var path = require('path');
-var http = require('http');
+var http = require('https');
 var fs = require('fs');
 var multipart = require('connect-multiparty');
 var app = express();
@@ -326,7 +326,7 @@ app.get('/api/torrent/:infoHash/stream/:index/metadata.json', function(req, res)
 			res.status(404).send('File not found!');
 			return;
 		}
-		var command = ffmpeg('http://localhost:' + port + '/api/torrent/' + infoHash + '/download/' + index)
+		var command = ffmpeg('https://localhost:' + port + '/api/torrent/' + infoHash + '/download/' + index)
 		.ffprobe(0, function(err, data) {
 			res.send(data);
 		});
@@ -363,7 +363,7 @@ app.get('/api/torrent/:infoHash/stream/:index/:quality.webm', function(req, res)
 			return;
 		}
 		res.contentType('webm');
-		var command = ffmpeg('http://localhost:' + port + '/api/torrent/' + infoHash + '/download/' + index)
+		var command = ffmpeg('https://localhost:' + port + '/api/torrent/' + infoHash + '/download/' + index)
 		.format('webm')
 		.size(params.picture.resolution)
 		.videoCodec(params.video.codec)
@@ -409,5 +409,5 @@ app.post('/api/torrent/:infoHash/delete', function(req, res) {
 
 var server = http.createServer(app);
 server.listen(port, function() {
-    console.log('Listening on http://127.0.0.1:' + port);
+    console.log('Listening on https://127.0.0.1:' + port);
 });
